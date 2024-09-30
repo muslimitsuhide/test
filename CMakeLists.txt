@@ -1,19 +1,13 @@
 cmake_minimum_required(VERSION 3.10)
+project(PaymentStrategyProject)
 
-project(StrategyPatternExample)
+set(CMAKE_CXX_STANDARD 17)
 
-set(CMAKE_CXX_STANDARD 11)
+add_executable(PaymentStrategyApp src/Program.cpp src/PayByCreditCard.cpp src/PayByPayPal.cpp)
 
-include_directories(include)
+add_subdirectory(tests)
 
-# Указываем исполняемый файл для основного кода
-add_executable(main_executable main.cpp)
-
-# Указываем исполняемый файл для тестов
-add_executable(test_executable test.cpp)
-
-# Связываем основной файл с заголовками
-target_sources(main_executable PRIVATE main.cpp)
-
-# Связываем файл с тестами с заголовками
-target_sources(test_executable PRIVATE test.cpp)
+enable_testing()
+add_executable(run_tests tests/test_PaymentStrategy.cpp src/PayByCreditCard.cpp src/PayByPayPal.cpp)
+target_link_libraries(run_tests gtest gtest_main)
+add_test(NAME test_PaymentStrategy COMMAND run_tests)
