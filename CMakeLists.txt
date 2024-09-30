@@ -8,6 +8,9 @@ add_executable(PaymentStrategyApp src/Program.cpp src/PayByCreditCard.cpp src/Pa
 add_subdirectory(tests)
 
 enable_testing()
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
 add_executable(run_tests tests/test_PaymentStrategy.cpp src/PayByCreditCard.cpp src/PayByPayPal.cpp)
-target_link_libraries(run_tests gtest gtest_main)
+target_link_libraries(run_tests ${GTEST_LIBRARIES} gtest_main)
 add_test(NAME test_PaymentStrategy COMMAND run_tests)
