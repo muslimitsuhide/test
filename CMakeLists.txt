@@ -3,7 +3,7 @@ project(PaymentStrategyProject)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_executable(PaymentStrategyApp src/Program.cpp src/PayByCreditCard.cpp src/PayByPayPal.cpp)
+add_executable(PaymentStrategyApp src/Program.cpp src/PayByCreditCard.cpp src/PayByPayPal.cpp src/CreditCard.cpp)
 
 add_subdirectory(tests)
 
