@@ -17,10 +17,10 @@ jobs:
     - name: Install Google Test
       run: |
         sudo apt-get install -y libgtest-dev
-        cd /usr/src/gtest
+        cd /usr/src/googletest
         sudo cmake .
         sudo make
-        sudo cp *.a /usr/lib
+        sudo cp libgtest*.a /usr/lib
     - name: Build and Test
       run: |
         mkdir build
