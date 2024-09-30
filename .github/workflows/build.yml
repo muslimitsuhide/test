@@ -1,10 +1,13 @@
-name: C++ CI
+name: CMake
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
+
+env:
+  BUILD_TYPE: Release
 
 jobs:
   build:
@@ -12,24 +15,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up CMake
-      run: sudo apt-get install cmake
-    - name: Install Google Test
-      run: |
-        sudo apt-get install -y libgtest-dev
-        cd /usr/src/googletest
-        sudo cmake .
-        sudo make
-        sudo cp libgtest*.a /usr/lib
-    - name: Build and Test
-      run: |
-        mkdir build
-        cd build
-        cmake ..
-        cmake --build .
-        ctest
-    - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+
+    - name: Create Build Environment
+      run: cmake -E make_directory ${{ runner.workspace }}/build
+
+    - name: Configure CMake
+      shell: bash
+      working-directory: ${{ runner.workspace }}/build
+      run: cmake $GITHUB_WORKSPACE -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+    - name: Build
+      working-directory: ${{ runner.workspace }}/build
+      shell: bash
+      run: cmake --build . --config $BUILD_TYPE
+
+    - name: Test
+      working-directory: ${{ runner.workspace }}/build
+      shell: bash
+      run: ctest -C $BUILD_TYPE
+
+    - name: Upload Build Artifacts
+      uses: actions/upload-artifact@v2
       with:
-        name: PaymentStrategyApp
-        path: build/PaymentStrategyApp
+        name: build-artifacts
+        path: ${{ runner.workspace }}/build
