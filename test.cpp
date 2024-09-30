@@ -1,8 +1,7 @@
-#include <iostream>
+#include <cassert>
 #include "Context.h"
 #include "ConcreteStrategyA.h"
 #include "ConcreteStrategyB.h"
-#include <cassert>
 
 void testAddition() {
     Context context(new ConcreteStrategyA());
@@ -17,7 +16,7 @@ void testSubtraction() {
 void testChangingStrategy() {
     Context context(new ConcreteStrategyA());
     assert(context.executeStrategy(10, 5) == 15);
-    context.setStrategy(new ConcreteStrategyB());
+    context = Context(new ConcreteStrategyB());
     assert(context.executeStrategy(10, 5) == 5);
 }
 
@@ -25,6 +24,5 @@ int main() {
     testAddition();
     testSubtraction();
     testChangingStrategy();
-    std::cout << "All tests passed!" << std::endl;
     return 0;
 }

@@ -2,12 +2,11 @@
 #define CONCRETE_STRATEGY_B_H
 
 #include "Strategy.h"
-#include <iostream>
 
 class ConcreteStrategyB : public Strategy {
 public:
-    void doSomething() override {
-        std::cout << "Executing strategy B" << std::endl;
+    int doOperation(int a, int b) override {
+        return a - b;
     }
 };
 

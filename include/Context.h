@@ -5,20 +5,14 @@
 
 class Context {
 public:
-    void setStrategy(Strategy* strategy) {
-        this->strategy = strategy;
-    }
+    Context(Strategy* strategy) : strategy_(strategy) {}
 
-    void executeStrategy() {
-        if (strategy) {
-            strategy->doSomething();
-        } else {
-            throw std::runtime_error("Strategy not set!");
-        }
+    int executeStrategy(int a, int b) {
+        return strategy_->doOperation(a, b);
     }
 
 private:
-    Strategy* strategy = nullptr;
+    Strategy* strategy_;
 };
 
 #endif // CONTEXT_H
