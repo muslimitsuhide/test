@@ -5,6 +5,7 @@
 /**
  * Dummy credit card class
  */
+#pragma once
 
 class CreditCard
 {
